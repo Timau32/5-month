@@ -1,8 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
+import {
+  bookAddedToCart,
+  bookDeleteFromCart,
+  bookRemoveFromCart,
+} from "../../redux/actions";
 import classes from "./styles.module.scss";
 
-const ShopCartTable = ({ items, total }) => {
+const ShopCartTable = ({ items, total, increment, decrement, deleteBook }) => {
   const renderItems = (el, idx) => {
     const { title, count, total, id } = el;
     return (
@@ -12,13 +17,22 @@ const ShopCartTable = ({ items, total }) => {
         <td>{count}</td>
         <td>{total}$</td>
         <td>
-          <button className="btn btn-outline-success btn-sm">
+          <button
+            onClick={() => increment(id)}
+            className="btn btn-outline-success btn-sm"
+          >
             <i className="fa-solid fa-circle-plus"></i>
           </button>
-          <button className="btn btn-outline-warning btn-sm">
+          <button
+            onClick={() => decrement(id)}
+            className="btn btn-outline-warning btn-sm"
+          >
             <i className="fa-solid fa-circle-minus"></i>
           </button>
-          <button className="btn btn-outline-danger btn-sm">
+          <button
+            onClick={() => deleteBook(id)}
+            className="btn btn-outline-danger btn-sm"
+          >
             <i className="fa-solid fa-trash"></i>
           </button>
         </td>
@@ -47,11 +61,19 @@ const ShopCartTable = ({ items, total }) => {
   );
 };
 
-const mapStateToProps = ({ cartItems, orderTotal }) => {
+const mapStateToProps = ({ cartItems }) => {
   return {
-    items: cartItems,
-    total: orderTotal,
+    items: cartItems.cartItems,
+    total: cartItems.orderTotal,
   };
 };
 
-export default connect(mapStateToProps)(ShopCartTable);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    increment: (bookid) => dispatch(bookAddedToCart(bookid)),
+    decrement: (bookid) => dispatch(bookRemoveFromCart(bookid)),
+    deleteBook: (bookid) => dispatch(bookDeleteFromCart(bookid)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShopCartTable);

@@ -23,9 +23,9 @@ const BookList = ({ books, booksLoaded, addBook, service }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({bookList}) => {
   return {
-    books: state.books,
+    books: bookList.books,
   };
 };
 

@@ -1,4 +1,9 @@
-import { BOOK_ADDED_TO_CART, FETCH_BOOKS_SUCCESS } from "./types";
+import {
+  BOOK_ADDED_TO_CART,
+  BOOK_DELETE_FROM_CART,
+  BOOK_REMOVE_FROM_CART,
+  FETCH_BOOKS_SUCCESS,
+} from "./types";
 
 const booksLoaded = (books) => {
   return {
@@ -14,4 +19,18 @@ const bookAddedToCart = (bookid) => {
   };
 };
 
-export { booksLoaded, bookAddedToCart };
+const bookRemoveFromCart = (bookid) => {
+  return {
+    type: BOOK_REMOVE_FROM_CART,
+    payload: bookid,
+  };
+};
+
+const bookDeleteFromCart = (bookid) => {
+  return {
+    type: BOOK_DELETE_FROM_CART,
+    payload: bookid,
+  };
+};
+
+export { booksLoaded, bookAddedToCart, bookRemoveFromCart,bookDeleteFromCart };
